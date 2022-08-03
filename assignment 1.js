@@ -1,6 +1,6 @@
 import "./styles.css";
 const colors = ["#1abc9c", "#3498db", "#9b59b6", "#f39c12", "#e74c3c"];
-const title = document.querySelector("body");
+const title = document.querySelector("body"); //html 파일에 class고 뭐고 없으니 body 그 자체를 불러와야됨.
 const superEventHandler = {
   handleMouseEnter: function () {
     title.innerText = "The mouse is here!";
