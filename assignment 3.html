@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Vanilla Challenge</title>
+    <meta charset="UTF-8" />
+    <link href="style.css" rel="stylesheet" type="text/css" /> <!-- hidden 클래스 활용을 위한 css파일 import-->
+  </head>
+
+  <body>
+    <h1>Random Number Game</h1>
+    <form id="casino-form"> <!-- form 생성-->
+      <h2>
+        Generate a number between 0 and
+        <input id="casinonum1" required type="number" min="0" /> <!-- first child/last child 전부 이 값만 떠서 id 추가하고 음수는 제한되니까 minimum을 0으로 설정-->
+      </h2>
+      <h3>
+        Guess the number :
+        <input id="casinonum2" required type="number" min="0" /> <!-- 위와 마찬가지-->
+        <button>Play!</button> <!-- 버튼 생성-->
+      </h3>
+      <h4 id="result1" , class="hidden"></h4> <!-- 텍스트 출력을 위해 추가-->
+      <h5 id="result2" , class="hidden"></h5> <!-- 내가 멍청해서 그런건지는 모르겠는데 줄바꿈이 안돼서 하나 더 추가함-->
+    </form>
+    <script src="src/index.js"></script>
+  </body>
+</html>
