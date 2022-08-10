@@ -4,3 +4,7 @@
 08.04 assignment 1 제출 완료, 코드 업로드 완료
 </br>
 08.05 assignment 2 제출 완료, 코드 업로드 완료
+</br>
+08.08 assignment 3 제출 완료, 코드 업로드 완료
+</br>
+08.10 assignment 4 제출 완료, 코드 업로드 완료
