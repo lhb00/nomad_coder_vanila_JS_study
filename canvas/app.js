@@ -1,33 +1,97 @@
+const modeBtn = document.getElementById("mode-btn");
+const destroyBtn = document.getElementById("destroy-btn");
+const eraserBtn = document.getElementById("eraser-btn");
+const colorOptions = Array.from(document.getElementsByClassName("color-option"));
+const color = document.getElementById("color");
+const lineWidth = document.getElementById("line-width");
 const canvas = document.querySelector("canvas");
 const ctx = canvas.getContext("2d");
-canvas.width = 800;
-canvas.height = 800;
 
-ctx.lineWidth = 2;
+const CANVAS_WIDTH = 800;
+const CANVAS_HEIGHT = 800;
+canvas.width = CANVAS_WIDTH;
+canvas.height = CANVAS_HEIGHT;
 
-const colors = [
-    "#ff3838",
-    "#ffb8b8",
-    "#c56cf0",
-    "#ff9f1a",
-    "#fff200",
-    "#32ff7e",
-    "#7efff5",
-    "#18dcff",
-    "#7d5fff",
-]
+ctx.lineWidth = lineWidth.value;
+
+let isPainting = false;
+let isFilling = false;
 
 function onMove(event) {
-    ctx.lineTo(event.offsetX, event.offsetY);
-    ctx.stroke();
+    if(isPainting){
+        ctx.lineTo(event.offsetX, event.offsetY);
+        ctx.stroke();
+        return;
+    }
+
+    ctx.moveTo(event.offsetX, event.offsetY);
+}
+function onMouseDown(){
+    isPainting = true;
 }
 
-function onClick(event) {
+function onMouseUp(){
+    isPainting = false;
+}
+
+function cancelPainting() {
+    isPainting = false;
     ctx.beginPath();
-    ctx.moveTo(event.offsetX, event.offsetY);
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    ctx.strokeStyle = color;
+}
+
+function onLineWidthChange(event) {
+    console.log(event.target.value);
+    ctx.lineWidth = event.target.value;
+}
+
+function onColorChange(event) {
+    ctx.strokeStyle = ctx.fillStyle = event.target.value;
+}
+
+function onColorClick(event) {
+    const colorValue = event.target.dataset.color;
+    ctx.strokeStyle = ctx.fillStyle = event.target.dataset.color;
+    color.value = colorValue;
+}
+
+function onModeClick()
+{
+    if(isFilling) {
+        isFilling = false;
+        modeBtn.innerText = "Fill";
+    } else {
+        isFilling = true;
+        modeBtn.innerText = "Draw";
+    }
+}
+
+function onCanvasClick() {
+    if(isFilling) {
+        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    }
+}
+
+function onDestroyClick() {
+    ctx.fillStyle = "white";
+    ctx.fillRect(0, 0, CANVAS_WIDTH, 800);
+}
+
+function onEraserClick() {
+    ctx.strokeStyle = "white";
+    isFilling = false;
+    modeBtn.innerText = "Fill";
 }
 
 canvas.addEventListener("mousemove", onMove);
-canvas.addEventListener("click", onClick);
+canvas.addEventListener("mousedown", onMouseDown);
+canvas.addEventListener("mouseup", onMouseUp);
+canvas.addEventListener("mouseleave", cancelPainting);
+canvas.addEventListener("click", onCanvasClick);
+lineWidth.addEventListener("change", onLineWidthChange);
+color.addEventListener("change", onColorChange);
+
+colorOptions.forEach(color => color.addEventListener("click", onColorClick));
+
+modeBtn.addEventListener("click", onModeClick);
+destroyBtn.addEventListener("click", onDestroyClick);
+eraserBtn.addEventListener("click", onEraserClick);
